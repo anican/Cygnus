@@ -1,6 +1,7 @@
 # Package tokenizer performs lexical analysis of converting Cygnus code into readable tokens
 import ply.lex as lex
 
+# class Tokenizer
 class TokenizerException(Exception):
     pass
 
@@ -8,46 +9,73 @@ class TokenizerException(Exception):
 
 # Syntactic keywords
 keywords = {
-    'if' : 'IF',
-    'else' : 'ELSE',
-    'elif' : 'ELIF',
-    'done' : 'DONE',
-    'return' : 'RETURN',
-    'let' : 'LET',
-    'int': 'INTTYPE',
-    'float': 'FLOATTYPE',
-    'char': 'CHARTYPE',
-    'function': 'FUNCTIONTYPE'
+   'if' : 'IF',
+   'else' : 'ELSE',
+   'done' : "DONE",
+   'return': "RETURN",
+   'const' : 'CONST',
+   'let': 'LET',
+   'int': 'INTTYPE',
+   'float': 'FLOATTYPE',
+   'char': 'CHARTYPE',
+   'function': 'FUNCTIONTYPE',
 }
 
-# List of tokens legal to Cygnus
 tokens = [
-    'INT', 'FLOAT','PLUS', 'MULTI', 'DIV', 'SUB', 'NAME', 'LPAREN', 'RPAREN', 'COLON', 'COMMA',
-    'SEMICOLON', 'ARROW', 'EQUALS', 'OCT', 'HEX', 'GT', 'LT', 'GTE', 'LTE'
+    'INT', 'FLOAT', 'PLUS', 'MULTI', 'DIV', 'SUB', 'NAME', 'LPAREN', 'RPAREN', 'COLON', 'COMMA',
+    'SEMICOLON', "ARROW", 'EQ', 'OCT', 'HEX', 'GT', 'LT', 'GTE', 'LTE', 'CHAR', 'STRING',
+    'EQCOMP', 'NEQ', 'AND', 'OR', 'NOT'
 ] + list(keywords.values())
 
-# Patterns for every token defined by either a function or regular expression
-# Regular expressions for legal tokens
 t_INT = r'-?[1-9]+[0-9]*'
-t_HEX = r'0x[0-9a-fA-F]*'
-t_OCT = r'0[0-9]*'
 t_FLOAT = r'-?[0-9]*\.[0-9]+'
 t_PLUS = r'\+'
 t_MULTI = r'\*'
 t_DIV = r'\/'
 t_SUB = r'-'
-# t_NAME = r'[a-zA-Z_]+([a-zA-Z0-9_])*'
 t_LPAREN = r'\('
 t_RPAREN = r'\)'
 t_COLON = r'\:'
 t_COMMA = r'\,'
 t_SEMICOLON = r'\;'
 t_ARROW = r'\-\>'
-t_EQUALS = r'='
+t_EQ = r'='
+t_EQCOMP = r'=='
+t_NEQ = r'\!='
 t_LT = r'<'
 t_GT = r'>'
 t_LTE = r'<='
 t_GTE = r'>='
+t_AND = r'&&'
+t_OR = r'\|\|'
+t_NOT = r'\!'
+t_ignore = ' \t'
+
+# Patterns for every token defined by either a function or regular expression
+# Regular expressions for legal tokens
+t_INT = r'-?[1-9]+[0-9]*'
+t_FLOAT = r'-?[0-9]*\.[0-9]+'
+t_PLUS = r'\+'
+t_MULTI = r'\*'
+t_DIV = r'\/'
+t_SUB = r'-'
+t_LPAREN = r'\('
+t_RPAREN = r'\)'
+t_COLON = r'\:'
+t_COMMA = r'\,'
+t_SEMICOLON = r'\;'
+t_ARROW = r'\-\>'
+t_EQ = r'='
+t_EQCOMP = r'=='
+t_NEQ = r'\!='
+t_LT = r'<'
+t_GT = r'>'
+t_LTE = r'<='
+t_GTE = r'>='
+t_AND = r'&&'
+t_OR = r'\|\|'
+t_NOT = r'\!'
+
 t_ignore = ' \t'
 
 tokenizer = lex.lex()
